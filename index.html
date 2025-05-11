@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SecurePass Manager</title>
+    <meta name="description" content="A secure password manager PWA">
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#2196f3">
+    <link rel="apple-touch-icon" href="icons/icon-192x192.png">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container py-4">
+        <header class="d-flex justify-content-between align-items-center mb-4">
+            <h1 class="h3">SecurePass Manager</h1>
+            <div class="mobile-nav">
+                <button id="gradientBtn" class="btn btn-outline-primary me-2">
+                    <i class="bi bi-palette-fill"></i>
+                </button>
+                <button id="settingsBtn" class="btn btn-outline-primary me-2">
+                    <i class="bi bi-gear-fill"></i>
+                </button>
+                <button id="darkModeToggle" class="btn btn-outline-primary me-2">
+                    <i class="bi bi-moon-fill"></i>
+                </button>
+                <button id="shareBtn" class="btn btn-outline-primary">
+                    <i class="bi bi-share-fill"></i>
+                </button>
+            </div>
+        </header>
+
+        <!-- Bottom Navigation for Mobile -->
+        <div class="bottom-nav">
+            <button id="gradientBtnMobile" class="btn btn-outline-primary">
+                <i class="bi bi-palette-fill"></i>
+                <span>Theme</span>
+            </button>
+            <button id="settingsBtnMobile" class="btn btn-outline-primary">
+                <i class="bi bi-gear-fill"></i>
+                <span>Settings</span>
+            </button>
+            <button id="darkModeToggleMobile" class="btn btn-outline-primary">
+                <i class="bi bi-moon-fill"></i>
+                <span>Dark</span>
+            </button>
+            <button id="shareBtnMobile" class="btn btn-outline-primary">
+                <i class="bi bi-share-fill"></i>
+                <span>Share</span>
+            </button>
+        </div>
+
+        <!-- Settings Modal -->
+        <div class="modal fade" id="settingsModal" tabindex="-1">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Settings</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form id="settingsForm">
+                            <div class="mb-3">
+                                <label for="updateNickname" class="form-label">Update Nickname</label>
+                                <div class="input-group">
+                                    <input type="password" class="form-control" id="updateNickname" required>
+                                    <button class="btn btn-outline-secondary" type="button" id="toggleNickname">
+                                        <i class="bi bi-eye"></i>
+                                    </button>
+                                </div>
+                                <div class="form-text">This nickname will be used to verify your identity when viewing full passwords.</div>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Save Changes</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Nickname Setup Modal -->
+        <div class="modal fade" id="nicknameSetupModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Welcome to SecurePass Manager</h5>
+                    </div>
+                    <div class="modal-body">
+                        <p>Please set up a nickname to secure your passwords.</p>
+                        <form id="nicknameForm">
+                            <div class="mb-3">
+                                <label for="nickname" class="form-label">Nickname</label>
+                                <div class="input-group">
+                                    <input type="password" class="form-control" id="nickname" required>
+                                    <button class="btn btn-outline-secondary" type="button" id="toggleInitialNickname">
+                                        <i class="bi bi-eye"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Set Nickname</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Password Verification Modal -->
+        <div class="modal fade" id="passwordVerificationModal" tabindex="-1">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Verify Your Identity</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form id="verificationForm">
+                            <div class="mb-3">
+                                <label for="verifyNickname" class="form-label">Enter Your Nickname</label>
+                                <input type="text" class="form-control" id="verifyNickname" required>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Verify</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6 mb-4">
+                <div class="card">
+                    <div class="card-header" id="addPasswordHeader">
+                        <h5 class="mb-0">
+                            <button class="btn btn-link" type="button" data-bs-toggle="collapse" data-bs-target="#addPasswordCollapse" aria-expanded="true" aria-controls="addPasswordCollapse">
+                                <i class="bi bi-plus-circle"></i> Add New Password
+                            </button>
+                        </h5>
+                    </div>
+                    <div id="addPasswordCollapse" class="collapse show" aria-labelledby="addPasswordHeader" data-bs-parent="#passwordAccordion">
+                        <div class="card-body">
+                            <form id="passwordForm">
+                                <div class="mb-3">
+                                    <label for="title" class="form-label">Title</label>
+                                    <input type="text" class="form-control" id="title" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="password" class="form-label">Password</label>
+                                    <input type="password" class="form-control" id="password" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="hint" class="form-label">Hint</label>
+                                    <input type="text" class="form-control" id="hint">
+                                </div>
+                                <button type="submit" class="btn btn-primary">Save Password</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header" id="savedPasswordsHeader">
+                        <h5 class="mb-0">
+                            <button class="btn btn-link collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#savedPasswordsCollapse" aria-expanded="false" aria-controls="savedPasswordsCollapse">
+                                <i class="bi bi-key"></i> Saved Passwords
+                            </button>
+                        </h5>
+                    </div>
+                    <div id="savedPasswordsCollapse" class="collapse" aria-labelledby="savedPasswordsHeader" data-bs-parent="#passwordAccordion">
+                        <div class="card-body">
+                            <div id="passwordList" class="list-group">
+                                <!-- Passwords will be listed here -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
+    <script src="app.js"></script>
+</body>
+</html> 
