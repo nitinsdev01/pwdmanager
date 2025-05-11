@@ -178,6 +178,10 @@ h1, h2, h3, h4, h5, h6,
     gap: 0.25rem;
 }
 
+.password-actions .btn-group .btn:last-child {
+    margin-right: 0;
+}
+
 .btn-outline-primary {
     color: var(--primary-color);
     border-color: var(--primary-color);
@@ -241,11 +245,42 @@ h1, h2, h3, h4, h5, h6,
     }
     
     .password-info {
-        flex-direction: row;
+        flex-direction: column;
+        gap: 0.75rem;
+    }
+    
+    .password-info > div {
+        width: 100%;
     }
     
     .password-actions {
-        justify-content: flex-end;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+    }
+
+    .password-actions .btn-group {
+        display: flex;
+        gap: 0.25rem;
+    }
+
+    .password-actions .btn-group .btn {
+        padding: 0.25rem 0.5rem;
+    }
+
+    .password-actions .btn-group .btn:last-child {
+        margin-right: 0;
+    }
+
+    .password-actions .btn-group:first-of-type {
+        margin: auto;
+    }
+
+    .password-warning {
+        width: 100%;
+        margin-top: 0.75rem;
     }
 }
 
@@ -309,12 +344,8 @@ h1, h2, h3, h4, h5, h6,
         padding: 0.5rem;
     }
 
-    .password-actions .btn-outline-danger {
-        width: 100%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        gap: 0.5rem;
+    .password-actions .btn-group .btn:last-child {
+        margin-right: 0;
     }
 
     .bottom-nav {
@@ -357,11 +388,19 @@ h1, h2, h3, h4, h5, h6,
     }
     
     .password-info {
-        flex-direction: row;
+        flex-direction: column;
     }
     
     .password-actions {
-        justify-content: flex-end;
+        flex-direction: row;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+    }
+
+    .password-warning {
+        width: 100%;
+        margin-top: 0.75rem;
     }
 
     .bottom-nav {
